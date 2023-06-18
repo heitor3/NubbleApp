@@ -1,8 +1,11 @@
 import React from 'react';
 import {
-  SafeAreaView,
+  SafeAreaView, View,
 } from 'react-native';
 import { Text } from './src/components/Text';
+import { Button } from './src/components/Button';
+import { ThemeProvider } from '@shopify/restyle';
+import { theme } from './src/theme';
 
 
 
@@ -10,14 +13,16 @@ import { Text } from './src/components/Text';
 function App(): JSX.Element {
 
   return (
-    <SafeAreaView>
-      <Text preset="headingLarge">
-        Salve
-      </Text>
-      <Text preset="headingLarge">
-        Salve
-      </Text>
-    </SafeAreaView>
+    <ThemeProvider theme={theme}>
+      <SafeAreaView>
+        <View style={{ paddingHorizontal: 24 }}>
+          <Text preset="headingLarge">
+            Salve
+          </Text>
+          <Button title='Entrar' />
+        </View>
+      </SafeAreaView>
+    </ThemeProvider>
   );
 }
 
