@@ -14,15 +14,22 @@ function App(): JSX.Element {
 
   return (
     <ThemeProvider theme={theme}>
-      <SafeAreaView>
-        <View style={{ paddingHorizontal: 24 }}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={{
+          flex: 1,
+          paddingHorizontal: 24,
+          flexDirection: 'column',
+          justifyContent: 'space-evenly',
+        }}>
           <Text preset="headingLarge">
             Salve
           </Text>
-          <Button title='Entrar' />
+          <Button title='Entrar' disabled />
+          <Button title='Entrar' loading />
+          <Button title='Entrar' preset='outline' />
         </View>
       </SafeAreaView>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
 
