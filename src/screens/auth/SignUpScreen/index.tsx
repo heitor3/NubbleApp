@@ -10,6 +10,7 @@ export function SignUpScreen() {
   function submitForm() {
     // TODO
   }
+
   return (
     <Screen canGoBack scrollable>
       <Text preset="headingLarge" bold mb="s32">
