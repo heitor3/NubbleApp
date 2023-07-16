@@ -8,7 +8,7 @@ import { RootParamList } from "../../../routes/Routes";
 
 type ScreenProps = NativeStackScreenProps<RootParamList, 'SignUp'>
 
-export function SignUpScreen() {
+export function SignUpScreen(props: ScreenProps) {
   function submitForm() {
     // TODO
   }
