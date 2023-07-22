@@ -1,8 +1,8 @@
 import React from 'react';
-import {Svg, Path, Circle} from 'react-native-svg';
-import {IconBase} from '../../components/Icon/Icon';
+import { Svg, Path, Circle } from 'react-native-svg';
+import { IconBase } from '../../components/Icon';
 
-export function ChatOnIcon({size = 20, color = 'black'}: IconBase) {
+export function ChatOnIcon({ size = 20, color = 'black' }: IconBase) {
   return (
     <Svg width={size} height={size} viewBox="0 0 20 20" fill="none">
       <Path
