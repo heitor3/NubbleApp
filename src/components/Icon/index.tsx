@@ -77,9 +77,9 @@ const iconRegistry = {
   trash: TrashIcon,
 }
 
-export function Icon({ name, color = "backgroundContrast", size = 20, onPress }: IconProps) {
-  const SVGIcon = iconRegistry[name];
+export function Icon({ name, color = "backgroundContrast", size, onPress }: IconProps) {
   const { colors } = useAppTheme();
+  const SVGIcon = iconRegistry[name];
 
   if (onPress) {
     return (

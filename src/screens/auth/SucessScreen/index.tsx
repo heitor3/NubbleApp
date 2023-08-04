@@ -6,11 +6,9 @@ import { Text } from "../../../components/Text";
 import { RootParamList } from "../../../routes/Routes";
 
 
-type ScreenProps = NativeStackScreenProps<RootParamList, 'Sucess'>
+type ScreenProps = NativeStackScreenProps<RootParamList, 'Success'>
 
-export function SucessScreen({ navigation, route }: ScreenProps) {
-
-  const { description, icon, title } = route.params;
+export function SuccessScreen({ navigation, route }: ScreenProps) {
 
   function goBackToBegin() {
     //TODO navegar para tela de login
@@ -18,9 +16,9 @@ export function SucessScreen({ navigation, route }: ScreenProps) {
 
   return (
     <Screen>
-      <Icon name={icon.name} />
-      <Text preset="headingLarge" mt="s24">{title}</Text>
-      <Text preset="paragraphLarge" mt="s16">{description}</Text>
+      <Icon {...route.params.icon} />
+      <Text preset="headingLarge" mt="s24">{route.params.title}</Text>
+      <Text preset="paragraphLarge" mt="s16">{route.params.description}</Text>
       <Button onPress={goBackToBegin} mt="s40" title="Voltar ao início" />
     </Screen>
   );

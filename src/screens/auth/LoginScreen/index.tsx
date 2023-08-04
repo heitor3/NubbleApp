@@ -13,6 +13,9 @@ export function LoginScreen({ navigation }: ScreenProps) {
   function navigateToSignUpScreen() {
     navigation.navigate("SignUp")
   }
+  function navigateToForgotPasswordScreen() {
+    navigation.navigate("ForgotPasswordScreen")
+  }
 
   return (
     <Screen scrollable>
@@ -31,7 +34,7 @@ export function LoginScreen({ navigation }: ScreenProps) {
         boxProps={{ mb: 's20' }}
       />
 
-      <Text bold color='primary' preset='paragraphSmall'>Esqueci minha senha</Text>
+      <Text onPress={navigateToForgotPasswordScreen} bold color='primary' preset='paragraphSmall'>Esqueci minha senha</Text>
 
       <Button title='Entrar' mt='s48' />
       <Button onPress={navigateToSignUpScreen} title='Criar uma conta' preset='outline' mt='s12' />
