@@ -3,19 +3,20 @@ import { Button } from "../../../components/Button";
 import { Screen } from "../../../components/Screen";
 import { Text } from "../../../components/Text";
 import { TextInput } from "../../../components/TextInput";
-import { RootParamList } from "../../../routes/Routes";
+import { RootStackParamList } from "../../../routes/Routes";
+import { useResetNavigationSuccess } from "../../../hooks/useResetNavigationSuccess";
 
 
 type ScreenProps = NativeStackScreenProps<
-  RootParamList,
+  RootStackParamList,
   'ForgotPasswordScreen'
 >;
 
 export function ForgotPasswordScreen({ navigation }: ScreenProps) {
-
+  const { reset } = useResetNavigationSuccess()
   function submitForm() {
-    //TODO
-    navigation.navigate('Success', {
+
+    reset({
       title: 'Enviamos as instruções para seu e-mail',
       description: 'Clique no link enviado no seu e-mail para recuperar sua senha',
       icon: {
@@ -23,6 +24,7 @@ export function ForgotPasswordScreen({ navigation }: ScreenProps) {
         color: 'primary',
       }
     })
+
   }
 
   return (

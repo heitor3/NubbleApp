@@ -8,7 +8,7 @@ import { ForgotPasswordScreen } from '../screens/auth/ForgotPasswordScreen';
 import { IconProps } from '../components/Icon';
 
 
-export type RootParamList = {
+export type RootStackParamList = {
   Login: undefined;
   SignUp: undefined;
   Success: {
@@ -19,7 +19,7 @@ export type RootParamList = {
   ForgotPasswordScreen: undefined;
 }
 
-const { Screen, Navigator } = createNativeStackNavigator<RootParamList>();
+const { Screen, Navigator } = createNativeStackNavigator<RootStackParamList>();
 
 export function Routes() {
   return (

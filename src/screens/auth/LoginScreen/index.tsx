@@ -4,9 +4,9 @@ import { Button } from "../../../components/Button";
 import { Screen } from "../../../components/Screen";
 import { PasswordInput } from "../../../components/PasswordInput/Index";
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootParamList } from "../../../routes/Routes";
+import { RootStackParamList } from "../../../routes/Routes";
 
-type ScreenProps = NativeStackScreenProps<RootParamList, 'Login'>
+type ScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>
 
 export function LoginScreen({ navigation }: ScreenProps) {
 

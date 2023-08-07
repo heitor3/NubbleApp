@@ -3,15 +3,15 @@ import { Button } from "../../../components/Button";
 import { Icon } from "../../../components/Icon";
 import { Screen } from "../../../components/Screen";
 import { Text } from "../../../components/Text";
-import { RootParamList } from "../../../routes/Routes";
+import { RootStackParamList } from "../../../routes/Routes";
 
 
-type ScreenProps = NativeStackScreenProps<RootParamList, 'Success'>
+type ScreenProps = NativeStackScreenProps<RootStackParamList, 'Success'>
 
 export function SuccessScreen({ navigation, route }: ScreenProps) {
 
   function goBackToBegin() {
-    //TODO navegar para tela de login
+    navigation.goBack()
   }
 
   return (
