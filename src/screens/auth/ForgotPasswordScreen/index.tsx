@@ -2,10 +2,12 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button } from "../../../components/Button";
 import { Screen } from "../../../components/Screen";
 import { Text } from "../../../components/Text";
-import { TextInput } from "../../../components/TextInput";
 import { RootStackParamList } from "../../../routes/Routes";
 import { useResetNavigationSuccess } from "../../../hooks/useResetNavigationSuccess";
-
+import { zodResolver } from '@hookform/resolvers/zod'
+import { ForgotPasswordSchema, forgotPasswordSchema } from './forgotPasswordSchema'
+import { useForm } from "react-hook-form";
+import { FormTextInput } from "../../../components/Form/FormTextInput";
 
 type ScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -13,8 +15,17 @@ type ScreenProps = NativeStackScreenProps<
 >;
 
 export function ForgotPasswordScreen({ navigation }: ScreenProps) {
-  const { reset } = useResetNavigationSuccess()
-  function submitForm() {
+  const { reset } = useResetNavigationSuccess();
+
+  const { control, formState, handleSubmit } = useForm<ForgotPasswordSchema>({
+    resolver: zodResolver(forgotPasswordSchema),
+    defaultValues: {
+      email: ''
+    },
+    mode: 'onChange'
+  })
+
+  function submitForm(values: ForgotPasswordSchema) {
 
     reset({
       title: 'Enviamos as instruções para seu e-mail',
@@ -31,13 +42,18 @@ export function ForgotPasswordScreen({ navigation }: ScreenProps) {
     <Screen canGoBack>
       <Text preset="headingLarge" mb="s16">Esqueci minha senha</Text>
       <Text preset="paragraphLarge" mb="s32">Digite seu e-mail enviaremos as instruções para redefinição de senha</Text>
-      <TextInput
-        errorMessage="digite uma e-mail válido"
+
+      <FormTextInput
+        control={control}
+        name="email"
         label="E-mail"
         placeholder="Digite seu e-mail"
         boxProps={{ mb: 's40' }}
       />
-      <Button onPress={submitForm} title="Recuperar senha" />
+
+      <Button
+        disabled={!formState.isValid}
+        onPress={handleSubmit(submitForm)} title="Recuperar senha" />
     </Screen>
   );
 }

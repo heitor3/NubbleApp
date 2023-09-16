@@ -34,6 +34,7 @@ export function TextInput({ label, errorMessage, rigthComponent, boxProps, ...re
         <Text mb="s4" preset="paragraphMedium">{label}</Text>
         <Box {...$textInputContainer} >
           <RNTextInput
+            autoCapitalize="none"
             ref={inputRef}
             placeholderTextColor={colors.gray2}
             style={

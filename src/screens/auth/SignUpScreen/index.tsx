@@ -1,18 +1,33 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Button } from "../../../components/Button";
-import { PasswordInput } from "../../../components/PasswordInput/Index";
 import { Screen } from "../../../components/Screen";
 import { Text } from "../../../components/Text";
-import { TextInput } from "../../../components/TextInput";
 import { RootStackParamList } from "../../../routes/Routes";
 import { useResetNavigationSuccess } from "../../../hooks/useResetNavigationSuccess";
+import { useForm } from "react-hook-form";
+import { FormTextInput } from "../../../components/Form/FormTextInput";
+import { FormPasswordInput } from "../../../components/Form/FormPasswordInput";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SignUpSchema, signUpSchema } from "./singUpSchema";
 
-type ScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>
+
+type ScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
 export function SignUpScreen({ navigation }: ScreenProps) {
   const { reset } = useResetNavigationSuccess()
+  const { control, formState, handleSubmit } = useForm<SignUpSchema>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      username: '',
+      fullName: '',
+      email: '',
+      password: '',
+    },
+    mode: "onChange"
+  });
 
-  function submitForm() {
+
+  function submitForm(formValues: SignUpSchema) {
 
     reset({
       title: "Sua conta foi criada com sucesso!",
@@ -30,29 +45,40 @@ export function SignUpScreen({ navigation }: ScreenProps) {
         Criar uma conta
       </Text>
 
-      <TextInput
-        boxProps={{ mb: 's20' }}
-        placeholder="Digite seu username"
+      <FormTextInput
+        control={control}
+        name="username"
         label="Seu user name"
-      />
-      <TextInput
+        placeholder="@"
         boxProps={{ mb: 's20' }}
-        placeholder="Digite seu nome completo"
-        label="Nome completo"
-      />
-      <TextInput
-        boxProps={{ mb: 's20' }}
-        placeholder="Digite seu e-mail"
-        label="E-mail"
-      />
-      <PasswordInput
-        secureTextEntry
-        placeholder="Digite sua senha"
-        boxProps={{ mb: 's48' }}
-        label='Senha'
       />
 
-      <Button onPress={submitForm} title="Criar uma conta" />
+      <FormTextInput
+        control={control}
+        name="fullName"
+        autoCapitalize="words"
+        placeholder="Digite seu nome completo"
+        label="Nome completo"
+        boxProps={{ mb: 's20' }}
+      />
+
+      <FormTextInput
+        control={control}
+        name="email"
+        placeholder="Digite seu e-mail"
+        label="E-mail"
+        boxProps={{ mb: 's20' }}
+      />
+
+      <FormPasswordInput
+        control={control}
+        name="password"
+        label='Senha'
+        placeholder="Digite sua senha"
+        boxProps={{ mb: 's48' }}
+      />
+
+      <Button disabled={!formState.isValid} onPress={handleSubmit(submitForm)} title="Criar uma conta" />
 
     </Screen>
   );
