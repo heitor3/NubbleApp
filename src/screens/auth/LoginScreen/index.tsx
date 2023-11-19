@@ -2,16 +2,14 @@ import { Text } from "../../../components/Text";
 import { Button } from "../../../components/Button";
 import { useForm } from "react-hook-form";
 import { Screen } from "../../../components/Screen";
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from "../../../routes/Routes";
 import { LoginSchema, loginSchema } from "./loginSchema";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormTextInput } from "../../../components/Form/FormTextInput";
 import { FormPasswordInput } from "../../../components/Form/FormPasswordInput";
+import { AuthScreenProps } from "../../../routes/navigationType";
 
-type ScreenProps = NativeStackScreenProps<RootStackParamList, 'Login'>;
 
-export function LoginScreen({ navigation }: ScreenProps) {
+export function LoginScreen({ navigation }: AuthScreenProps<"Login">) {
   const { control, formState, handleSubmit } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {

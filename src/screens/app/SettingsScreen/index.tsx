@@ -1,19 +1,22 @@
 import { Button } from "../../../components/Button";
 import { Screen } from "../../../components/Screen";
 import { Text } from "../../../components/Text";
+import { AppScreenProps } from "../../../routes/navigationType";
 
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { AppStackParamsList } from "../../../routes/AppStack";
-
-type ScreenProps = NativeStackScreenProps<AppStackParamsList, 'SettingsScreen'>
-
-export function SettingsScreen({ navigation }: ScreenProps) {
-  const { navigate } = navigation;
+export function SettingsScreen({ navigation }: AppScreenProps<'SettingsScreen'>) {
   return (
     <Screen canGoBack>
       <Text preset="headingSmall">
         Setting Screen
       </Text>
+      <Button
+        title="New Post"
+        onPress={() =>
+          navigation.navigate('AppTabNavigator', {
+            screen: 'NewPostScreen'
+          })
+        }
+      />
     </Screen>
   )
 }

@@ -1,6 +1,4 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { HomeScreen } from "../screens/app/HomeScreen";
-import { SettingsScreen } from "../screens/app/SettingsScreen";
 import { IconProps } from "../components/Icon";
 import { LoginScreen } from "../screens/auth/LoginScreen";
 import { SignUpScreen } from "../screens/auth/SignUpScreen";

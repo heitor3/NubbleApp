@@ -1,13 +1,10 @@
 import { Button } from "../../../components/Button";
 import { Screen } from "../../../components/Screen";
 import { Text } from "../../../components/Text";
+import { AppTabScreenProps } from "../../../routes/navigationType";
 
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { AppStackParamsList } from "../../../routes/AppStack";
 
-type ScreenProps = NativeStackScreenProps<AppStackParamsList, 'HomeScreen'>
-
-export function HomeScreen({ navigation }: ScreenProps) {
+export function HomeScreen({ navigation }: AppTabScreenProps<'HomeScreen'>) {
   const { navigate } = navigation;
   return (
     <Screen>
