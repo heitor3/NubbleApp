@@ -5,6 +5,7 @@ import { postService } from "../../../domain/Post/postService";
 import { Post } from "../../../domain/Post/types";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { PostItem } from "../../../components/PostItem";
+import { HomeHeader } from "./components/HomeHeader";
 
 
 export function HomeScreen({ navigation }: AppTabScreenProps<'HomeScreen'>) {
@@ -23,6 +24,7 @@ export function HomeScreen({ navigation }: AppTabScreenProps<'HomeScreen'>) {
   return (
     <Screen style={{ paddingTop: 0, paddingBottom: 0, paddingHorizontal: 0 }}>
       <FlatList
+        ListHeaderComponent={<HomeHeader />}
         showsVerticalScrollIndicator={false}
         data={postlist}
         keyExtractor={(item) => item.id}
