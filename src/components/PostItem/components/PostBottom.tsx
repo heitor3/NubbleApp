@@ -1,5 +1,5 @@
 import { Box } from '../../../components/Box'
-import { Post } from '../../../domain/Post/types';
+import { Post } from '../../../domain/Post/postTypes';
 import { Text } from '../../Text';
 
 

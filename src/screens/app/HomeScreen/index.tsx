@@ -2,17 +2,34 @@ import { useEffect, useState } from "react";
 import { Screen } from "../../../components/Screen";
 import { AppTabScreenProps } from "../../../routes/navigationType";
 import { postService } from "../../../domain/Post/postService";
-import { Post } from "../../../domain/Post/types";
+import { Post } from "../../../domain/Post/postTypes";
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { PostItem } from "../../../components/PostItem";
 import { HomeHeader } from "./components/HomeHeader";
+import { HomeEmpty } from "./components/HomeEmpty";
 
 
-export function HomeScreen({ navigation }: AppTabScreenProps<'HomeScreen'>) {
-  const { navigate } = navigation;
-  const [postlist, setPostlist] = useState<Post[]>([]);
+export function HomeScreen({ }: AppTabScreenProps<'HomeScreen'>) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<boolean | null>(null);
+  const [postList, setPostList] = useState<Post[]>([]);
+
+  async function fetchData() {
+    try {
+      setError(null)
+      setLoading(true);
+      const list = await postService.getList();
+      setPostList(list);
+    } catch (error) {
+      console.log("Error ", error)
+      setError(true)
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    postService.getList().then(list => setPostlist(list))
+    fetchData()
   }, [])
 
   function renderItem({ item }: ListRenderItemInfo<Post>) {
@@ -22,13 +39,15 @@ export function HomeScreen({ navigation }: AppTabScreenProps<'HomeScreen'>) {
   }
 
   return (
-    <Screen style={{ paddingTop: 0, paddingBottom: 0, paddingHorizontal: 0 }}>
+    <Screen style={{ flex: 1, paddingTop: 0, paddingBottom: 0, paddingHorizontal: 0 }}>
       <FlatList
         ListHeaderComponent={<HomeHeader />}
         showsVerticalScrollIndicator={false}
-        data={postlist}
+        data={postList}
+        contentContainerStyle={{ flex: postList.length === 0 ? 1 : undefined }}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
+        ListEmptyComponent={<HomeEmpty refetch={fetchData} loading={loading} error={error} />}
       />
     </Screen>
   )

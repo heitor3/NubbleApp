@@ -1,5 +1,5 @@
 import { Box } from "../Box";
-import { Post } from "../../domain/Post/types";
+import { Post } from "../../domain/Post/postTypes";
 import { PostHeader } from "./components/PostHeader";
 import { PostImage } from "./components/PostImage";
 import { PostActions } from "./components/PostActions";
