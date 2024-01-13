@@ -9,7 +9,7 @@ import { usePostList } from "../../../domain/Post/useCases/usePostList";
 
 
 export function HomeScreen({ }: AppTabScreenProps<'HomeScreen'>) {
-  const { error, loading, postList, refetch } = usePostList();
+  const { error, loading, postList, refetch, fetchNextPage } = usePostList();
 
   function renderItem({ item }: ListRenderItemInfo<Post>) {
     return (
@@ -23,6 +23,8 @@ export function HomeScreen({ }: AppTabScreenProps<'HomeScreen'>) {
         ListHeaderComponent={<HomeHeader />}
         showsVerticalScrollIndicator={false}
         data={postList}
+        onEndReached={fetchNextPage}
+        onEndReachedThreshold={0.1}
         contentContainerStyle={{ flex: postList.length === 0 ? 1 : undefined }}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
