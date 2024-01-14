@@ -8,37 +8,56 @@ export function usePostList() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<boolean | null>(null);
   const [page, setPage] = useState(1);
+  const [hasNextPage, setHasNextPage] = useState(true);
 
-  async function fetchData() {
+  async function fetchInitialData() {
     try {
       setError(null);
       setLoading(true);
-      const list = await postService.getList(page);
-      setPostList(prev => [...prev, ...list]);
-      setPage(prev => prev + 1);
+      const { data, meta } = await postService.getList(1);
+      setPostList(data);
+      if (meta.hasNextPage) {
+        setPage(2);
+      } else {
+        setHasNextPage(false);
+      }
     } catch (error) {
-      console.log("Error ", error)
       setError(true);
     } finally {
       setLoading(false);
     }
   };
 
-  function fetchNextPage() {
-    if (!loading) {
-      fetchData();
+  async function fetchNextPage() {
+    if (loading || !hasNextPage) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const { data, meta } = await postService.getList(page);
+      setPostList(prev => [...prev, ...data]);
+      if (meta.hasNextPage) {
+        setPage(prev => prev + 1);
+      } else {
+        setHasNextPage(false);
+      }
+    } catch (error) {
+      setError(true);
+    } finally {
+      setLoading(false)
     }
   }
 
   useEffect(() => {
-    fetchData()
+    fetchInitialData()
   }, [])
 
   return {
     postList,
     error,
     loading,
-    refetch: fetchData,
+    refresh: fetchInitialData,
     fetchNextPage
   }
 
