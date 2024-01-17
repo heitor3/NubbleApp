@@ -11,7 +11,7 @@ import { useScrollToTop } from "@react-navigation/native";
 
 
 export function HomeScreen({ }: AppTabScreenProps<'HomeScreen'>) {
-  const { error, loading, postList, refresh, fetchNextPage } = usePostList();
+  const { error, loading, data, refresh, fetchNextPage } = usePostList();
 
   const flatListRef = React.useRef<FlatList<Post>>(null);
   useScrollToTop(flatListRef)
@@ -28,12 +28,12 @@ export function HomeScreen({ }: AppTabScreenProps<'HomeScreen'>) {
         ref={flatListRef}
         ListHeaderComponent={<HomeHeader />}
         showsVerticalScrollIndicator={false}
-        data={postList}
+        data={data}
         onEndReached={fetchNextPage}
         onEndReachedThreshold={0.1}
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} />}
         refreshing={loading}
-        contentContainerStyle={{ flex: postList.length === 0 ? 1 : undefined }}
+        contentContainerStyle={{ flex: data.length === 0 ? 1 : undefined }}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         ListEmptyComponent={<HomeEmpty refetch={refresh} loading={loading} error={error} />}
