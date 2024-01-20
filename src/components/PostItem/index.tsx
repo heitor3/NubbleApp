@@ -18,7 +18,7 @@ export function PostItem({ post }: Props) {
       <PostHeader author={post.author} />
       <PostImage imageURL={post.imageURL} />
       <PostActions reactionCount={post.reactionCount} commentCount={post.commentCount} favoriteCount={post.favoriteCount} />
-      <PostBottom author={post.author} commentCount={post.commentCount} text={post.text} />
+      <PostBottom author={post.author} commentCount={post.commentCount} text={post.text} id={post.id} />
     </Box>
   );
 }

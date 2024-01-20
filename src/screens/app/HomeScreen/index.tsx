@@ -34,7 +34,7 @@ export function HomeScreen({ }: AppTabScreenProps<'HomeScreen'>) {
         refreshControl={<RefreshControl refreshing={loading} onRefresh={refresh} />}
         refreshing={loading}
         contentContainerStyle={{ flex: data.length === 0 ? 1 : undefined }}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         ListEmptyComponent={<HomeEmpty refetch={refresh} loading={loading} error={error} />}
       />
