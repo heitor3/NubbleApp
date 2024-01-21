@@ -1,33 +1,16 @@
-import { useState } from "react";
 import { postCommentService } from "../postCommentService";
 import { PostComment } from "../postCommentTypes";
+import { MutationOptions, useMutation } from "../../../../infra/hooks/useMutation";
 
-interface Options {
-  onSuccess?: (data: PostComment) => void;
-  onError?: (message: string) => void;
-}
-
-export function usePostCommentCreate(postId: number, options?: Options) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<boolean | null>(null);
+export function usePostCommentCreate(postId: number, options?: MutationOptions<PostComment>) {
+  const { mutate, error, loading } = useMutation<{ message: string }, PostComment>(
+    ({ message }) => postCommentService.create(postId, message),
+    options
+  );
 
   async function createComment(message: string) {
-    try {
-      setLoading(false);
-      setError(null);
-      const postComment = await postCommentService.create(postId, message);
-      if (options?.onSuccess) {
-        options.onSuccess(postComment);
-      }
-    } catch (error) {
-      if (options?.onError) {
-        options.onError("Erro ao criar comentário");
-      }
-      setError(true);
-    } finally {
-      setLoading(true);
-    }
 
+    return await mutate({ message });
   }
 
   return {

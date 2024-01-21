@@ -6,19 +6,20 @@ import { PostComment } from "../../../domain/Post/PostComment/postCommentTypes";
 import { PostCommentItem } from "./components/PostCommentItem";
 import { PostCommentBottom } from "./components/PostCommentBottom";
 import { useAppSafeArae } from "../../../hooks/useAppSafeArea";
-import { TextMessage } from "../../../components/TextMessage";
-import { useState } from "react";
 import { Box } from "../../../components/Box";
 import { PostCommentTextMessage } from "./components/PostCommentTextMessage";
+import { useUser } from "../../../domain/Auth/hooks/useUser";
 
 export function PostCommentScreen({ route }: AppScreenProps<'PostCommentScreen'>) {
   const postId = route.params.postId;
+  const postAuthorId = route.params.postAuthorId;
   const { data, fetchNextPage, hasNextPage, refresh } = usePostCommentList(postId);
+  const { id } = useUser();
   const { bottom } = useAppSafeArae();
 
   function renderItem({ item }: ListRenderItemInfo<PostComment>) {
     return (
-      <PostCommentItem postComment={item} />
+      <PostCommentItem postComment={item} onRemoveComment={refresh} userId={id} postAuthorId={postAuthorId} />
     )
   }
 
