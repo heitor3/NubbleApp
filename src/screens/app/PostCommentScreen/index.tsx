@@ -9,19 +9,20 @@ import { useAppSafeArae } from "../../../hooks/useAppSafeArea";
 import { TextMessage } from "../../../components/TextMessage";
 import { useState } from "react";
 import { Box } from "../../../components/Box";
+import { PostCommentTextMessage } from "./components/PostCommentTextMessage";
 
 export function PostCommentScreen({ route }: AppScreenProps<'PostCommentScreen'>) {
   const postId = route.params.postId;
-  const { data, fetchNextPage, hasNextPage } = usePostCommentList(postId);
+  const { data, fetchNextPage, hasNextPage, refresh } = usePostCommentList(postId);
   const { bottom } = useAppSafeArae();
-  const [message, setMessage] = useState("");
-
 
   function renderItem({ item }: ListRenderItemInfo<PostComment>) {
     return (
       <PostCommentItem postComment={item} />
     )
   }
+
+
 
   return (
     <Screen flex={1} title="Comentários" canGoBack>
@@ -34,11 +35,7 @@ export function PostCommentScreen({ route }: AppScreenProps<'PostCommentScreen'>
             <PostCommentBottom fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />
           }
         />
-        <TextMessage
-          value={message}
-          onChangeText={() => setMessage(message)}
-          onPressSend={() => console.log()}
-        />
+        <PostCommentTextMessage postId={postId} onAddComment={refresh} />
       </Box>
     </Screen>
   )

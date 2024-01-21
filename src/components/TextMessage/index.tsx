@@ -6,12 +6,14 @@ import { useAppTheme } from "../../hooks/useAppTheme";
 
 
 interface TextMessageProps extends RNTextInputProps {
-  onPressSend: () => void;
+  onPressSend: (message: string) => void;
 }
 
 export function TextMessage({ onPressSend, value, ...rest }: TextMessageProps) {
-  const { colors } = useAppTheme();
   const inputRef = useRef<RNTextInput>(null);
+
+  const { colors } = useAppTheme();
+
   function focusInput() {
     inputRef.current?.focus();
   }
@@ -41,7 +43,7 @@ export function TextMessage({ onPressSend, value, ...rest }: TextMessageProps) {
           }
           {...rest}
         />
-        <Pressable disabled={sendIsDisable} onPress={onPressSend}>
+        <Pressable disabled={sendIsDisable} onPress={() => onPressSend(value || '')}>
           <Text bold color={sendIsDisable ? 'gray2' : 'primary'}>Enviar</Text>
         </Pressable>
       </Box>
