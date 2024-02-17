@@ -5,6 +5,7 @@ import { Text } from "../../../../components/Text";
 import { PostComment } from "../../../../domain/Post/PostComment/postCommentTypes";
 import { usePostCommentRemove } from "../../../../domain/Post/PostComment/useCases/usePostCommentRemove";
 import { postCommentService } from "../../../../domain/Post/PostComment/postCommentService";
+import { useToastService } from "../../../../service/toast/useToast";
 
 interface Props {
   postComment: PostComment;
@@ -14,7 +15,13 @@ interface Props {
 }
 
 export function PostCommentItem({ postComment, onRemoveComment, postAuthorId, userId }: Props) {
-  const { mutate } = usePostCommentRemove({ onSuccess: onRemoveComment });
+  const { showToast } = useToastService();
+  const { mutate } = usePostCommentRemove({
+    onSuccess: () => {
+      onRemoveComment()
+      showToast({ message: 'Comentário deletado' })
+    }
+  });
 
   const isAllowToDelete = postCommentService.isAllowToDelete(userId, postComment, postAuthorId)
 

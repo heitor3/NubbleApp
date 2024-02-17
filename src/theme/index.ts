@@ -1,7 +1,7 @@
 import { createTheme } from '@shopify/restyle';
 import { ViewStyle } from 'react-native';
 
-const palette = {
+export const palette = {
   greenPrimary: '#074C4E',
   greenPrimaryLight: '#EAF6F6',
   carrotSecondary: '#F86F2D',
