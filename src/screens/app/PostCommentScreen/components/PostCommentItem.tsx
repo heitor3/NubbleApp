@@ -2,9 +2,9 @@ import { Alert, Pressable } from "react-native";
 import { Box } from "../../../../components/Box";
 import { ProfileAvatar } from "../../../../components/ProfileAvatar";
 import { Text } from "../../../../components/Text";
-import { PostComment } from "../../../../domain/Post/PostComment/postCommentTypes";
-import { usePostCommentRemove } from "../../../../domain/Post/PostComment/useCases/usePostCommentRemove";
-import { postCommentService } from "../../../../domain/Post/PostComment/postCommentService";
+import { PostComment } from "../../../../domain/PostComment/postCommentTypes";
+import { usePostCommentRemove } from "../../../../domain/PostComment/useCases/usePostCommentRemove";
+import { postCommentService } from "../../../../domain/PostComment/postCommentService";
 import { useToastService } from "../../../../service/toast/useToast";
 
 interface Props {

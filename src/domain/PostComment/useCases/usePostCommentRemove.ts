@@ -1,4 +1,4 @@
-import { MutationOptions, useMutation } from "../../../../infra/hooks/useMutation";
+import { MutationOptions, useMutation } from "../../../infra/hooks/useMutation";
 import { postCommentService } from "../postCommentService";
 
 

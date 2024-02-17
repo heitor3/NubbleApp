@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextMessage } from "../../../../components/TextMessage";
-import { usePostCommentCreate } from "../../../../domain/Post/PostComment/useCases/usePostCommentCreate";
+import { usePostCommentCreate } from "../../../../domain/PostComment/useCases/usePostCommentCreate";
 import { Keyboard } from "react-native";
 
 interface Props {

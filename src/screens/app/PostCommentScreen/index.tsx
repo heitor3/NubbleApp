@@ -1,8 +1,8 @@
 import { FlatList, ListRenderItemInfo } from "react-native";
 import { Screen } from "../../../components/Screen";
-import { usePostCommentList } from "../../../domain/Post/PostComment/useCases/usePostCommentList";
+import { usePostCommentList } from "../../../domain/PostComment/useCases/usePostCommentList";
 import { AppScreenProps } from "../../../routes/navigationType";
-import { PostComment } from "../../../domain/Post/PostComment/postCommentTypes";
+import { PostComment } from "../../../domain/PostComment/postCommentTypes";
 import { PostCommentItem } from "./components/PostCommentItem";
 import { PostCommentBottom } from "./components/PostCommentBottom";
 import { useAppSafeArae } from "../../../hooks/useAppSafeArea";
