@@ -3,6 +3,7 @@ import { SettingsScreen } from "../screens/app/SettingsScreen";
 import { AppTabBottomTabParamList, AppTabNavigator } from "./AppTabNavigatior";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { PostCommentScreen } from "../screens/app/PostCommentScreen";
+import { ProfileScreen } from "../screens/app/ProfileScreen";
 
 
 export type AppStackParamsList = {
@@ -11,6 +12,9 @@ export type AppStackParamsList = {
   PostCommentScreen: {
     postId: number;
     postAuthorId: number;
+  };
+  ProfileScreen: {
+    userId: number;
   }
 }
 
@@ -29,6 +33,7 @@ export function AppStack() {
       <Screen name="AppTabNavigator" component={AppTabNavigator} />
       <Screen name="SettingsScreen" component={SettingsScreen} />
       <Screen name="PostCommentScreen" component={PostCommentScreen} />
+      <Screen name="ProfileScreen" component={ProfileScreen} />
     </Navigator>
   );
 }

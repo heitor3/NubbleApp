@@ -13,7 +13,7 @@ import { useUser } from "../../../domain/Auth/hooks/useUser";
 export function PostCommentScreen({ route }: AppScreenProps<'PostCommentScreen'>) {
   const postId = route.params.postId;
   const postAuthorId = route.params.postAuthorId;
-  const { data, fetchNextPage, hasNextPage, refresh } = usePostCommentList(postId);
+  const { list, fetchNextPage, hasNextPage, refresh } = usePostCommentList(postId);
   const { id } = useUser();
   const { bottom } = useAppSafeArae();
 
@@ -30,7 +30,7 @@ export function PostCommentScreen({ route }: AppScreenProps<'PostCommentScreen'>
       <Box flex={1} justifyContent="space-between">
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={data} renderItem={renderItem}
+          data={list} renderItem={renderItem}
           contentContainerStyle={{ paddingBottom: bottom }}
           ListFooterComponent={
             <PostCommentBottom fetchNextPage={fetchNextPage} hasNextPage={hasNextPage} />

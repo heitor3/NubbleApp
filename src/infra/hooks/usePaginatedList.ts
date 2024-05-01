@@ -1,64 +1,58 @@
-import { useEffect, useState } from "react";
-import { Page } from "../../types/Page";
+import { useEffect, useState } from 'react';
 
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { Page } from '../../types/Page';
 
-export function usePaginatedList<Data>(getList: (page: number) => Promise<Page<Data>>) {
-  const [data, setData] = useState<Data[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<boolean | null>(null);
-  const [page, setPage] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(true);
+export interface UsePaginatedListResult<TData> {
+  list: TData[];
+  isError: boolean | null;
+  isLoading: boolean;
+  refresh: () => void;
+  fetchNextPage: () => void;
+  hasNextPage: boolean;
+}
 
-  async function fetchInitialData() {
-    try {
-      setError(null);
-      setLoading(true);
-      const { data, meta } = await getList(1);
-      setData(data);
-      if (meta.hasNextPage) {
-        setPage(2);
-      } else {
-        setHasNextPage(false);
-      }
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+interface PaginatedListOption {
+  /**
+   * Set this to `false` to disable automatic refetching when the query mounts or changes query keys.
+   */
+  enabled?: boolean;
+  /**
+   * The time in milliseconds after data is considered stale.
+   */
+  staleTime?: number;
+}
+export function usePaginatedList<Data>(
+  queryKey: readonly unknown[],
+  getList: (page: number) => Promise<Page<Data>>,
+  options?: PaginatedListOption,
+): UsePaginatedListResult<Data> {
+  const [list, setList] = useState<Data[]>([]);
 
-  async function fetchNextPage() {
-    if (loading || !hasNextPage) {
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const { data, meta } = await getList(page);
-      setData(prev => [...prev, ...data]);
-      if (meta.hasNextPage) {
-        setPage(prev => prev + 1);
-      } else {
-        setHasNextPage(false);
-      }
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false)
-    }
-  }
+  const query = useInfiniteQuery({
+    queryKey,
+    queryFn: ({ pageParam = 1 }) => getList(pageParam),
+    getNextPageParam: ({ meta }) =>
+      meta.hasNextPage ? meta.currentPage + 1 : undefined,
+    enabled: options?.enabled,
+    staleTime: options?.staleTime,
+  });
 
   useEffect(() => {
-    fetchInitialData()
-  }, [])
+    if (query.data) {
+      const newList = query.data.pages.reduce<Data[]>((prev, curr) => {
+        return [...prev, ...curr.data];
+      }, []);
+      setList(newList);
+    }
+  }, [query.data]);
 
   return {
-    data,
-    error,
-    loading,
-    refresh: fetchInitialData,
-    fetchNextPage,
-    hasNextPage
-  }
-
+    list,
+    isError: query.isError,
+    isLoading: query.isLoading,
+    refresh: query.refetch,
+    fetchNextPage: query.fetchNextPage,
+    hasNextPage: !!query.hasNextPage,
+  };
 }
